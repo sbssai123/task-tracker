@@ -23,6 +23,6 @@
   <div>
 
   <div>
-    <%= submit "Save", class: "btn btn-primary" %>
+    <%= submit "Register", class: "btn btn-primary" %>
   </div>
 <% end %>
