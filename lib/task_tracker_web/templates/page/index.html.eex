@@ -1,12 +1,12 @@
 <div class="row">
   <div class="col-12">
     <h1>Welcome to Task Tracker</h1>
-    <p><%= link("Register", to: Routes.user_path(@conn, :new),
-    class: "btn btn-info") %></p>
     <%= form_for @conn, Routes.session_path(@conn, :create),
       [class: "form-inline"], fn f -> %>
       <%= text_input f, :email, class: "form-control" %>
       <%= submit "Login", class: "btn btn-secondary" %>
     <% end %>
+    <p><%= link("Register", to: Routes.user_path(@conn, :new),
+    class: "btn btn-info") %></p>
   </div>
 </div>

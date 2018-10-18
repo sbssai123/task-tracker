@@ -1,37 +1,79 @@
-<h1>All Tasks</h1>
 
 <table class="table table-striped">
+  <h2>Your Tasks</h2>
   <thead>
     <tr>
       <th>Title</th>
-      <th>Desc</th>
+      <th>Description</th>
       <th>Completed</th>
       <th>Duration</th>
+      <th>Actions</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for task <- @tasks do %>
+      <%= if task.user_id == @current_user.id do %>
+        <tr>
+          <td><%= task.title %></td>
+          <td><%= task.desc %></td>
+          <%= if task.completed do %>
+            <td>✔</td>
+          <% else %>
+            <td>❌</td>
+          <% end %>
+          <td><%= task.duration.hour %> hours <%= task.duration.minute %> mins</td>
+          <td>
+            <!-- <%= link "Show", to: Routes.task_path(@conn, :show, task),
+                class: "btn btn-secondary" %> -->
+            <%= link "Edit", to: Routes.task_path(@conn, :edit, task),
+                class: "btn btn-info" %>
+            <%= link "Delete", to: Routes.task_path(@conn, :delete, task),
+                method: :delete, data: [confirm: "Are you sure?"],
+                class: "btn btn-danger" %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+<table class="table table-striped">
+  <h2>All Tasks</h2>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Completed</th>
+      <th>Duration</th>
+      <th>Actions</th>
       <th>Assigned to</th>
 
       <th></th>
     </tr>
   </thead>
   <tbody>
-<%= for task <- @tasks do %>
-    <tr>
-      <td><%= task.title %></td>
-      <td><%= task.desc %></td>
-      <td><%= task.completed %></td>
-      <td><%= task.duration %></td>
-      <td><%= task.user_id %></td>
-
-      <td>
-        <%= link "Show", to: Routes.task_path(@conn, :show, task),
-            class: "btn btn-secondary" %>
-        <%= link "Edit", to: Routes.task_path(@conn, :edit, task),
-            class: "btn btn-info" %>
-        <%= link "Delete", to: Routes.task_path(@conn, :delete, task),
-            method: :delete, data: [confirm: "Are you sure?"],
-            class: "btn btn-danger" %>
-      </td>
-    </tr>
-<% end %>
+    <%= for task <- @tasks do %>
+        <tr>
+          <td><%= task.title %></td>
+          <td><%= task.desc %></td>
+          <%= if task.completed do %>
+            <td>✔</td>
+          <% else %>
+            <td>❌</td>
+          <% end %>
+          <td> <%= task.duration.hour %> hours <%= task.duration.minute %> mins</td>
+          <td>
+            <!-- <%= link "Show", to: Routes.task_path(@conn, :show, task),
+                class: "btn btn-secondary" %> -->
+            <%= link "Edit", to: Routes.task_path(@conn, :edit, task),
+                class: "btn btn-info" %>
+            <%= link "Delete", to: Routes.task_path(@conn, :delete, task),
+                method: :delete, data: [confirm: "Are you sure?"],
+                class: "btn btn-danger" %>
+          </td>
+          <td><%= task.user_id %></td>
+        </tr>
+    <% end %>
   </tbody>
 </table>
 

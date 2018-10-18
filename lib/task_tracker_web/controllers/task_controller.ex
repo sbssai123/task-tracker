@@ -17,6 +17,7 @@ defmodule TaskTrackerWeb.TaskController do
   end
 
   def create(conn, %{"task" => task_params}) do
+    users = Users.list_users()
     case Tasks.create_task(task_params) do
       {:ok, task} ->
         conn
@@ -24,7 +25,7 @@ defmodule TaskTrackerWeb.TaskController do
         |> redirect(to: Routes.task_path(conn, :show, task))
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, "new.html", changeset: changeset)
+        render(conn, "new.html", changeset: changeset, users: users)
     end
   end
 
