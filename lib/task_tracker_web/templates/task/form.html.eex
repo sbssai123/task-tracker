@@ -28,7 +28,7 @@
   <%= if @new or (not @new and not @task.completed) do %>
     <div class="form-group">
       <%= label f, :user_id %>
-      <%= select f, :user_id, Enum.map(@users, (&{&1.first_name, &1.id}))%>
+      <%= select f, :user_id, Enum.map(@users, fn u -> {u.first_name, u.id} end)%>
       <%= error_tag f, :user_id %>
     </div>
   <% end %>
