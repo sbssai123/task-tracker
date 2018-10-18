@@ -19,5 +19,6 @@ defmodule TaskTracker.Users.User do
     |> cast(attrs, [:first_name, :last_name, :email])
     |> validate_required([:first_name, :last_name, :email])
     |> unique_constraint(:email)
+    |> validate_format(:email, ~r/^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$/)
   end
 end
