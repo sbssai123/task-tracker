@@ -23,7 +23,10 @@
           <% else %>
             <td>❌</td>
           <% end %>
-          <td><%= task.duration.hour %> hours <%= task.duration.minute %> mins</td>
+          <td>
+            <%= if task.duration do %>
+              <%= task.duration.hour %> hours <%= task.duration.minute %> mins </td>
+            <% end %>
           <td>
             <!-- <%= link "Show", to: Routes.task_path(@conn, :show, task),
                 class: "btn btn-secondary" %> -->
@@ -61,7 +64,10 @@
           <% else %>
             <td>❌</td>
           <% end %>
-          <td> <%= task.duration.hour %> hours <%= task.duration.minute %> mins</td>
+          <td>
+            <%= if task.duration do %>
+              <%= task.duration.hour %> hours <%= task.duration.minute %> mins</td>
+            <% end %>
           <td>
             <!-- <%= link "Show", to: Routes.task_path(@conn, :show, task),
                 class: "btn btn-secondary" %> -->
