@@ -1,4 +1,4 @@
-<h1>Listing Tasks</h1>
+<h1>All Tasks</h1>
 
 <table class="table table-striped">
   <thead>
@@ -7,6 +7,7 @@
       <th>Desc</th>
       <th>Completed</th>
       <th>Duration</th>
+      <th>Assigned to</th>
 
       <th></th>
     </tr>
@@ -18,6 +19,7 @@
       <td><%= task.desc %></td>
       <td><%= task.completed %></td>
       <td><%= task.duration %></td>
+      <td><%= task.user_id %></td>
 
       <td>
         <%= link "Show", to: Routes.task_path(@conn, :show, task),
