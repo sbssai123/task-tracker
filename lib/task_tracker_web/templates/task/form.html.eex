@@ -17,17 +17,27 @@
     <%= error_tag f, :desc %>
   </div>
 
-  <div class="form-group">
-    <%= label f, :completed %>
-    <%= checkbox f, :completed, class: "form-control" %>
-    <%= error_tag f, :completed %>
-  </div>
+  <%= if not @new and @task.user_id == @current_user.id do %>
+    <div class="form-group">
+      <%= label f, :completed %>
+      <%= checkbox f, :completed, class: "form-control" %>
+      <%= error_tag f, :completed %>
+    </div>
+  <% end %>
 
   <div class="form-group">
-    <%= label f, :duration %>
-    <%= time_select f, :duration, class: "form-control" %>
-    <%= error_tag f, :duration %>
+    <%= label f, :user_id %>
+    <%= select f, :user_id, Enum.map(@users, (&{&1.first_name, &1.id}))%>
+    <%= error_tag f, :user_id %>
   </div>
+
+  <%= if not @new and @task.user_id == @current_user.id do %>
+    <div class="form-group">
+      <%= label f, :duration %>
+      <%= time_select f, :duration, class: "form-control", minute: [options: [0, 15, 30, 45]] %>
+      <%= error_tag f, :duration %>
+    </div>
+  <% end %>
 
   <div>
     <%= submit "Save", class: "btn btn-primary" %>
