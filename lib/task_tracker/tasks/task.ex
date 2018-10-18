@@ -8,6 +8,7 @@ defmodule TaskTracker.Tasks.Task do
     field :desc, :string
     field :duration, :time
     field :title, :string
+    field :user_id, :id
 
     timestamps()
   end
