@@ -2,17 +2,17 @@
 // The MiniCssExtractPlugin is used to separate it out into
 // its own CSS file.
 import css from "../css/app.scss";
-import jQuery from 'jquery';
-window.jQuery = window.$ = jQuery; // Bootstrap requires a global "$" object.
-import "bootstrap";
+
 
 // webpack automatically bundles all modules in your
 // entry points. Those entry points can be configured
 // in "webpack.config.js".
 //
 // Import dependencies
-//
 import "phoenix_html";
+import jQuery from 'jquery';
+window.jQuery = window.$ = jQuery; // Bootstrap requires a global "$" object.
+import "bootstrap";
 
 // Import local files
 //
