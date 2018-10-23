@@ -14,60 +14,91 @@
   </thead>
   <tbody>
     <%= for task <- @tasks do %>
-      <%= if task.user_id == @current_user.id do %>
-        <tr>
-          <td><%= task.title %></td>
-          <td><%= task.desc %></td>
-          <%= if task.completed do %>
-            <td>✔</td>
-          <% else %>
-            <td>❌</td>
+      <tr>
+        <td><%= task.title %></td>
+        <td><%= task.desc %></td>
+        <%= if task.completed do %>
+          <td>✔</td>
+        <% else %>
+          <td>❌</td>
+        <% end %>
+        <td>
+          <%= if task.duration do %>
+            <%= task.duration.hour %> hours <%= task.duration.minute %> mins </td>
           <% end %>
-          <td>
-            <%= if task.duration do %>
-              <%= task.duration.hour %> hours <%= task.duration.minute %> mins </td>
-            <% end %>
-          <td>
-            <!-- <%= link "Show", to: Routes.task_path(@conn, :show, task),
-                class: "btn btn-secondary" %> -->
-            <%= link "Edit", to: Routes.task_path(@conn, :edit, task),
-                class: "btn btn-info" %>
-            <%= link "Delete", to: Routes.task_path(@conn, :delete, task),
-                method: :delete, data: [confirm: "Are you sure?"],
-                class: "btn btn-danger" %>
-          </td>
-        </tr>
-      <% end %>
+        <td>
+          <!-- <%= link "Show", to: Routes.task_path(@conn, :show, task),
+              class: "btn btn-secondary" %> -->
+          <%= link "Edit", to: Routes.task_path(@conn, :edit, task),
+              class: "btn btn-info" %>
+          <%= link "Delete", to: Routes.task_path(@conn, :delete, task),
+              method: :delete, data: [confirm: "Are you sure?"],
+              class: "btn btn-danger" %>
+        </td>
+      </tr>
     <% end %>
   </tbody>
+<%= if @current_user.is_manager do %>
+  <table class="table table-striped">
+    <h2>Your Underlings' Tasks</h2>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Completed</th>
+        <th>Duration</th>
+        <th>Actions</th>
+        <th>Assigned to</th>
+
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= for task <- @underling_tasks do %>
+          <tr>
+            <td><%= task.title %></td>
+            <td><%= task.desc %></td>
+            <%= if task.completed do %>
+              <td>✔</td>
+            <% else %>
+              <td>❌</td>
+            <% end %>
+            <td>
+              <%= if task.duration do %>
+                <%= task.duration.hour %> hours <%= task.duration.minute %> mins</td>
+              <% end %>
+            <td>
+              <!-- <%= link "Show", to: Routes.task_path(@conn, :show, task),
+                  class: "btn btn-secondary" %> -->
+              <%= link "Edit", to: Routes.task_path(@conn, :edit, task),
+                  class: "btn btn-info" %>
+              <%= link "Delete", to: Routes.task_path(@conn, :delete, task),
+                  method: :delete, data: [confirm: "Are you sure?"],
+                  class: "btn btn-danger" %>
+            </td>
+            <td><%= task.user_id %></td>
+          </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
 <table class="table table-striped">
-  <h2>All Tasks</h2>
+  <h2>Unassigned Tasks</h2>
   <thead>
     <tr>
       <th>Title</th>
       <th>Description</th>
-      <th>Completed</th>
-      <th>Duration</th>
       <th>Actions</th>
-      <th>Assigned to</th>
 
       <th></th>
     </tr>
   </thead>
   <tbody>
-    <%= for task <- @tasks do %>
+    <%= for task <- @unassigned_tasks do %>
         <tr>
           <td><%= task.title %></td>
           <td><%= task.desc %></td>
-          <%= if task.completed do %>
-            <td>✔</td>
-          <% else %>
-            <td>❌</td>
-          <% end %>
-          <td>
-            <%= if task.duration do %>
-              <%= task.duration.hour %> hours <%= task.duration.minute %> mins</td>
-            <% end %>
           <td>
             <!-- <%= link "Show", to: Routes.task_path(@conn, :show, task),
                 class: "btn btn-secondary" %> -->

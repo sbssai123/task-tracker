@@ -7,17 +7,24 @@ defmodule TaskTrackerWeb.TaskController do
 
   def index(conn, _params) do
     tasks = Tasks.list_tasks()
-    render(conn, "index.html", tasks: tasks)
+    current_user = get_session(conn, :user_id)
+    your_tasks = Tasks.get_user_tasks(current_user)
+    underling_tasks = Tasks.get_underling_tasks(current_user)
+    unassigned_tasks = Tasks.get_unassigned_tasks()
+    render(conn, "index.html", tasks: your_tasks, underling_tasks: underling_tasks,
+    unassigned_tasks: unassigned_tasks)
   end
 
   def new(conn, _params) do
+    current_user = get_session(conn, :user_id)
     changeset = Tasks.change_task(%Task{})
-    users = Users.list_users()
+    users = Users.get_underlings(current_user)
     render(conn, "new.html", changeset: changeset, users: users)
   end
 
   def create(conn, %{"task" => task_params}) do
-    users = Users.list_users()
+    current_user = get_session(conn, :user_id)
+    users = Users.get_underlings(current_user)
     case Tasks.create_task(task_params) do
       {:ok, task} ->
         conn
@@ -31,20 +38,27 @@ defmodule TaskTrackerWeb.TaskController do
 
   def show(conn, %{"id" => id}) do
     task = Tasks.get_task!(id)
-    user = Users.get_user!(task.user_id)
-    render(conn, "show.html", task: task, user: user)
+    if task.user_id do
+      user = Users.get_user!(task.user_id)
+      render(conn, "show.html", task: task, user: user)
+    else
+      user = nil
+      render(conn, "show.html", task: task, user: user)
+    end
   end
 
   def edit(conn, %{"id" => id}) do
     task = Tasks.get_task!(id)
     changeset = Tasks.change_task(task)
-    users = Users.list_users()
+    current_user = get_session(conn, :user_id)
+    users = Users.get_underlings(current_user)
     render(conn, "edit.html", task: task, users: users, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "task" => task_params}) do
     task = Tasks.get_task!(id)
-    users = Users.list_users()
+    current_user = get_session(conn, :user_id)
+    users = Users.get_underlings(current_user)
     case Tasks.update_task(task, task_params) do
       {:ok, task} ->
         conn

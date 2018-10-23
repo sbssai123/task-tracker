@@ -22,10 +22,12 @@
     <%= @task.duration %>
   </li>
 
-  <li>
-    <strong>Assigned to:</strong>
-    <%= @user.first_name %>
-  </li>
+  <%= if @user do %>
+    <li>
+      <strong>Assigned to:</strong>
+      <%= @user.first_name %>
+    </li>
+  <% end %>
 
 </ul>
 

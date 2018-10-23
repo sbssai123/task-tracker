@@ -10,15 +10,19 @@
   <body>
     <div class="container">
       <nav class="navbar navbar-expand-sm navbar-light bg-white">
-        <div class="col-4">
+
           <%= if @current_user do %>
-            <a class="navbar-brand" href="/tasks">Task Tracker</a>
+            <div class="col-4">
+              <a class="navbar-brand" href="/tasks">Task Tracker</a>
+            </div>
+            <div class="col-4">
+              <a class="navbar-brand" href="/users/<%=@current_user.id%>">Your Profile</a>
+            </div>
           <% else %>
-            <a class="navbar-brand" href="/">Task Tracker</a>
+            <div class="col-4">
+              <a class="navbar-brand" href="/">Task Tracker</a>
+            </div>
           <% end %>
-        </div>
-        <div class="col-4">
-        </div>
         <div class="col-4">
           <%= if @current_user do %>
             <p class="my-3">

@@ -11,8 +11,8 @@ config :logger, level: :warn
 
 # Configure your database
 config :task_tracker, TaskTracker.Repo,
-  username: "tasktracker1",
+  username: "sreeyasai",
   password: "aizef5NaW0pi",
-  database: "task_tracker_test",
+  database: "task_tracker_2",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
