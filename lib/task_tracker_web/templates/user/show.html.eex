@@ -27,11 +27,6 @@
     <%= end %>
   </li>
 
-  <li>
-    <strong>Email:</strong>
-    <%= @user.email %>
-  </li>
-
 </ul>
 <%= if @user.is_manager do %>
   <h2> Your Underlings </h2>

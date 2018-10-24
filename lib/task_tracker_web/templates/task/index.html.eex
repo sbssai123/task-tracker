@@ -27,8 +27,8 @@
             <%= task.duration.hour %> hours <%= task.duration.minute %> mins </td>
           <% end %>
         <td>
-          <!-- <%= link "Show", to: Routes.task_path(@conn, :show, task),
-              class: "btn btn-secondary" %> -->
+          <%= link "Show", to: Routes.task_path(@conn, :show, task),
+              class: "btn btn-secondary" %>
           <%= link "Edit", to: Routes.task_path(@conn, :edit, task),
               class: "btn btn-info" %>
           <%= link "Delete", to: Routes.task_path(@conn, :delete, task),
@@ -68,8 +68,8 @@
                 <%= task.duration.hour %> hours <%= task.duration.minute %> mins</td>
               <% end %>
             <td>
-              <!-- <%= link "Show", to: Routes.task_path(@conn, :show, task),
-                  class: "btn btn-secondary" %> -->
+              <%= link "Show", to: Routes.task_path(@conn, :show, task),
+                  class: "btn btn-secondary" %>
               <%= link "Edit", to: Routes.task_path(@conn, :edit, task),
                   class: "btn btn-info" %>
               <%= link "Delete", to: Routes.task_path(@conn, :delete, task),
@@ -100,8 +100,8 @@
           <td><%= task.title %></td>
           <td><%= task.desc %></td>
           <td>
-            <!-- <%= link "Show", to: Routes.task_path(@conn, :show, task),
-                class: "btn btn-secondary" %> -->
+            <%= link "Show", to: Routes.task_path(@conn, :show, task),
+                class: "btn btn-secondary" %>
             <%= link "Edit", to: Routes.task_path(@conn, :edit, task),
                 class: "btn btn-info" %>
             <%= link "Delete", to: Routes.task_path(@conn, :delete, task),

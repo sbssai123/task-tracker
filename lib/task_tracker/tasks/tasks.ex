@@ -37,7 +37,11 @@ defmodule TaskTracker.Tasks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id), do: Repo.get!(Task, id)
+  def get_task!(id) do
+    Repo.one! from t in Task,
+    where: t.id == ^id,
+    preload: [:timeblock]
+  end
 
   # get the underling tasks given the manager id
   def get_underling_tasks(id) do

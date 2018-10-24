@@ -17,15 +17,25 @@
     <%= @task.completed %>
   </li>
 
+  <%= if @user do %>
+    <li>
+      <strong>Assigned to:</strong>
+      <%= @user.first_name %>
+    </li>
+  <% end %>
+
   <li>
     <strong>Duration:</strong>
     <%= @task.duration %>
   </li>
 
-  <%= if @user do %>
+  <%= if @task.user_id == @current_user.id do %>
     <li>
-      <strong>Assigned to:</strong>
-      <%= @user.first_name %>
+      <strong>Start Working </strong>
+      <p id="start-time"></p>
+      <button id="timeblock-button"
+                data-task-id="<%= @task.id %>"
+                class="btn btn-secondary">Start Task</button>
     </li>
   <% end %>
 
@@ -39,3 +49,7 @@
   <%= link("Back", to: Routes.task_path(@conn, :index),
     class: "btn btn-default") %>
 </span>
+
+<script>
+ window.timeblock_path = "<%= Routes.timeblock_path(@conn, :create) %>";
+</script>
