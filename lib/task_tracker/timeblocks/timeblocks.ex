@@ -73,6 +73,13 @@ defmodule TaskTracker.Timeblocks do
     |> Repo.update()
   end
 
+  # For the given task_id, get all the timeblocks
+  def get_timeblock_for_task(id) do
+    timeblocks = Repo.all(Timeblock)
+    Enum.filter(timeblocks, fn t -> t.task_id == id end)
+  end
+
+
   @doc """
   Deletes a Timeblock.
 

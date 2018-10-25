@@ -13,6 +13,7 @@ import "phoenix_html";
 import jQuery from 'jquery';
 window.jQuery = window.$ = jQuery; // Bootstrap requires a global "$" object.
 import "bootstrap";
+// import _ from "lodash";
 
 // Import local files
 //
@@ -20,26 +21,63 @@ import "bootstrap";
 // import socket from "./socket"
 
 $(function() {
-  $('#timeblock-button').click((ev) => {
+  $('.delete-button').click((ev) => {
     let task_id = $(ev.target).data('task-id');
-    let d = new Date();
-    let start = formatDate(d);
-    console.log(start);
     let text = JSON.stringify({
-    timeblock: {
-        start_time: start,
-        end_time: null,
-        task_id: task_id,
-      },
+
     });
-    $.ajax(timeblock_path, {
-      method: "post",
+    $.ajax(`${timeblock_path}/${task_id}`, {
+      type: "DELETE",
       dataType: "json",
       contentType: "application/json; charset=UTF-8",
-      data: text,
+      data: "",
       success: (resp) => {
-        $('#start-time').text(`(your start time: ${resp.data.start_time})`);
+        location.reload()
       },
+    });
+  });
+});
+
+$(function() {
+  function update_timeblocks(task_id) {
+    $.ajax(`${timeblock_path}?task_id=${task_id}`, {
+      method: "get",
+      dataType: "json",
+      contentType: "application/json; charset=UTF-8",
+      data: "",
+      success: (resp) => {
+        location.reload()
+      },
+    });
+  }
+
+  $('#start-button').click((ev) => {
+    let task_id = $(ev.target).data('task-id');
+    let start_d = new Date();
+    let start = formatDate(start_d);
+    $('#start-button').prop('disabled', true);
+    $('#end-button').prop('disabled', false);
+    $('#end-button').click((ev) => {
+      let end_d = new Date();
+      let end = formatDate(end_d);
+      let text = JSON.stringify({
+        timeblock: {
+          start_time: start,
+          end_time: end,
+          task_id: task_id,
+        },
+      });
+      $.ajax(timeblock_path, {
+        method: "post",
+        dataType: "json",
+        contentType: "application/json; charset=UTF-8",
+        data: text,
+        success: (resp) => {
+          $('#start-button').prop('disabled', false);
+          $('#end-button').prop('disabled', true);
+          update_timeblocks(task_id);
+        },
+      });
     });
   });
 });

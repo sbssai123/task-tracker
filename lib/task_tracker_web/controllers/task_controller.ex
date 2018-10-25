@@ -4,6 +4,7 @@ defmodule TaskTrackerWeb.TaskController do
   alias TaskTracker.Tasks
   alias TaskTracker.Tasks.Task
   alias TaskTracker.Users
+  alias TaskTracker.Timeblocks
 
   def index(conn, _params) do
     tasks = Tasks.list_tasks()
@@ -18,7 +19,8 @@ defmodule TaskTrackerWeb.TaskController do
   def new(conn, _params) do
     current_user = get_session(conn, :user_id)
     changeset = Tasks.change_task(%Task{})
-    users = Users.get_underlings(current_user)
+    cu = Users.get_user(current_user)
+    users = Users.get_underlings(current_user) ++ [cu]
     render(conn, "new.html", changeset: changeset, users: users)
   end
 
@@ -38,12 +40,13 @@ defmodule TaskTrackerWeb.TaskController do
 
   def show(conn, %{"id" => id}) do
     task = Tasks.get_task!(id)
+    timeblocks = Timeblocks.get_timeblock_for_task(task.id)
     if task.user_id do
       user = Users.get_user!(task.user_id)
-      render(conn, "show.html", task: task, user: user)
+      render(conn, "show.html", task: task, user: user, timeblocks: timeblocks)
     else
       user = nil
-      render(conn, "show.html", task: task, user: user)
+      render(conn, "show.html", task: task, user: user, timeblocks: timeblocks)
     end
   end
 
@@ -51,14 +54,16 @@ defmodule TaskTrackerWeb.TaskController do
     task = Tasks.get_task!(id)
     changeset = Tasks.change_task(task)
     current_user = get_session(conn, :user_id)
-    users = Users.get_underlings(current_user)
+    cu = Users.get_user(current_user)
+    users = Users.get_underlings(current_user) ++ [cu]
     render(conn, "edit.html", task: task, users: users, changeset: changeset)
   end
 
   def update(conn, %{"id" => id, "task" => task_params}) do
     task = Tasks.get_task!(id)
     current_user = get_session(conn, :user_id)
-    users = Users.get_underlings(current_user)
+    cu = Users.get_user(current_user)
+    users = Users.get_underlings(current_user) ++ [cu]
     case Tasks.update_task(task, task_params) do
       {:ok, task} ->
         conn

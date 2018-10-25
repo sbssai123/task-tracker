@@ -6,7 +6,7 @@
       <th>Title</th>
       <th>Description</th>
       <th>Completed</th>
-      <th>Duration</th>
+      <!-- <th>Duration</th> -->
       <th>Actions</th>
 
       <th></th>
@@ -22,10 +22,6 @@
         <% else %>
           <td>❌</td>
         <% end %>
-        <td>
-          <%= if task.duration do %>
-            <%= task.duration.hour %> hours <%= task.duration.minute %> mins </td>
-          <% end %>
         <td>
           <%= link "Show", to: Routes.task_path(@conn, :show, task),
               class: "btn btn-secondary" %>
@@ -46,7 +42,7 @@
         <th>Title</th>
         <th>Description</th>
         <th>Completed</th>
-        <th>Duration</th>
+        <!-- <th>Duration</th> -->
         <th>Actions</th>
         <th>Assigned to</th>
 
@@ -63,10 +59,6 @@
             <% else %>
               <td>❌</td>
             <% end %>
-            <td>
-              <%= if task.duration do %>
-                <%= task.duration.hour %> hours <%= task.duration.minute %> mins</td>
-              <% end %>
             <td>
               <%= link "Show", to: Routes.task_path(@conn, :show, task),
                   class: "btn btn-secondary" %>

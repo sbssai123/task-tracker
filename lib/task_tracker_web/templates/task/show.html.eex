@@ -24,21 +24,41 @@
     </li>
   <% end %>
 
-  <li>
-    <strong>Duration:</strong>
-    <%= @task.duration %>
-  </li>
+  <table class="table table-striped">
+    <h4>Timeblocks</h4>
+    <thead>
+      <tr>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="timeblocks">
+      <%= for timeblock <- @timeblocks do %>
+        <tr>
+          <td><%= timeblock.start_time %></td>
+          <td><%= timeblock.end_time %></td>
+          <td>
+            <button
+              data-task-id="<%= timeblock.id %>"
+              class="btn btn-danger delete-button">Delete Task</button>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
   <%= if @task.user_id == @current_user.id do %>
-    <li>
-      <strong>Start Working </strong>
+      <strong>Start A New Timeblock </strong>
       <p id="start-time"></p>
-      <button id="timeblock-button"
+      <p id="end-time"></p>
+      <button id="start-button"
                 data-task-id="<%= @task.id %>"
-                class="btn btn-secondary">Start Task</button>
-    </li>
+                class="btn btn-info">Start Task</button>
+      <button id="end-button"
+                data-task-id="<%= @task.id %>"
+                class="btn btn-secondary" disabled>End Task</button>
   <% end %>
-
 </ul>
 
 <span>
