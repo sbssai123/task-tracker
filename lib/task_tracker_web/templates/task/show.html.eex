@@ -41,14 +41,14 @@
           <td>
             <button
               data-task-id="<%= timeblock.id %>"
-              class="btn btn-danger delete-button">Delete Task</button>
+              class="btn btn-danger delete-button">Delete Timeblock</button>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 
-  <%= if @task.user_id == @current_user.id do %>
+  <%= if @task.user_id == @current_user.id and  not @task.completed do %>
       <strong>Start A New Timeblock </strong>
       <p id="start-time"></p>
       <p id="end-time"></p>
