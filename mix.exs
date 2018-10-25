@@ -20,7 +20,7 @@ defmodule TaskTracker.MixProject do
   def application do
     [
       mod: {TaskTracker.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools],
     ]
   end
 

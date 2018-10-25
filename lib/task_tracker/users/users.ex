@@ -36,7 +36,7 @@ defmodule TaskTracker.Users do
 
   """
   def get_user!(id), do: Repo.get!(User, id)
-  
+
   def get_user(id), do: Repo.get(User, id)
 
   @doc """
@@ -53,6 +53,20 @@ defmodule TaskTracker.Users do
   """
   def get_user_by_email(email) do
     Repo.get_by(User, email: email)
+  end
+
+  def get_manager(id) do
+    user = Repo.get(User, id)
+    if user.manager_id do
+      Repo.get(User, user.manager_id)
+    end
+  end
+
+  # given a manager id, get all of the users of the underlings
+  def get_underlings(id) do
+    user = Repo.get(User, id)
+    users = Repo.all(User)
+    Enum.filter(users, fn u -> u.manager_id == user.id end)
   end
 
   def create_user(attrs \\ %{}) do

@@ -7,6 +7,8 @@ defmodule TaskTracker.Tasks do
   alias TaskTracker.Repo
 
   alias TaskTracker.Tasks.Task
+  alias TaskTracker.Users.User
+  alias TaskTracker.Users
 
   @doc """
   Returns the list of tasks.
@@ -35,8 +37,29 @@ defmodule TaskTracker.Tasks do
       ** (Ecto.NoResultsError)
 
   """
-  def get_task!(id), do: Repo.get!(Task, id)
+  def get_task!(id) do
+    Repo.one! from t in Task,
+    where: t.id == ^id,
+    preload: [:timeblock]
+  end
 
+  # get the underling tasks given the manager id
+  def get_underling_tasks(id) do
+    tasks = Repo.all(Task)
+    underlings_ids = Enum.map(Users.get_underlings(id), fn u -> u.id end)
+    Enum.filter(tasks, fn t -> t.user_id in underlings_ids end)
+  end
+
+  # get the tasks from the given user
+  def get_user_tasks(id) do
+    tasks = Repo.all(Task)
+    Enum.filter(tasks, fn t -> t.user_id == id end)
+  end
+
+  def get_unassigned_tasks() do
+    tasks = Repo.all(Task)
+    Enum.filter(tasks, fn t -> t.user_id == nil end)
+  end
   @doc """
   Creates a task.
 
